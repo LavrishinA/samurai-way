@@ -1,0 +1,12 @@
+.nav {
+    background-color: #4f4428;
+    grid-row: 2/3;
+    grid-column: 1 /2;
+}
+
+.nav li {
+    color: #dccc70;
+}
+
+/*#2c3724*/
+/*#4f4428*/
