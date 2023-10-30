@@ -1,0 +1,7 @@
+.companion {
+    color: #dccc70;
+}
+
+.companion :global(.active) {
+    color: #6ad73e;
+}

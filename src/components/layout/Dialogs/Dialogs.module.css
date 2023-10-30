@@ -1,0 +1,26 @@
+.dialogs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.companions {
+    align-self: flex-start;
+    padding-left: 1rem;
+    text-align: left;
+
+}
+
+.messages {
+    width: 80%;
+    padding: 10px 20px;
+    text-align: center;
+
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border: 2px solid #dccc70;
+    border-radius: 10px;
+}
