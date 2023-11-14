@@ -1,22 +1,14 @@
 import React from 'react';
-import {MyPosts} from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {Actions, Posts} from "../../../redux/state";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
-type ProfileProps = {
-    profileState: {
-        posts: Posts[]
-        textAreaValue: string
-    }
-    dispatch: (action: Actions) => void
-}
-
-export const Profile = ({profileState,  dispatch}: ProfileProps) => {
+export const Profile = () => {
 
     return (
         <section>
             <ProfileInfo/>
-            <MyPosts posts={profileState.posts} textAreaValue={profileState.textAreaValue} dispatch={dispatch}/>
+
+            <MyPostsContainer />
         </section>
     );
 };

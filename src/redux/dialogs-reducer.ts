@@ -1,19 +1,47 @@
-import {Actions, MessagesPage} from "./state";
+import {Actions} from "./store";
 
+export type Companions = {
+    id: string
+    name: string
+}
+export type Messages = {
+    id: string
+    msgText: string
+}
+export type MessagesPage = {
+    messages: Messages[]
+    companions: Companions[]
+    messageBody: string
+}
 
-export function dialogsReducer(state: MessagesPage, action: Actions) {
+const initialState: MessagesPage = {
+    messages: [
+        {id: "1", msgText: "Hi"},
+        {id: "2", msgText: "I am from incubator"},
+        {id: "3", msgText: "Let go..."}]
+        ,
+        companions: [
+        {id: "1", name: "Yana"},
+        {id: "2", name: "Maks"},
+        {id: "3", name: "Sasha"},
+        {id: "4", name: "Renato"},
+        {id: "5", name: "Michela"},
+        {id: "6", name: "Vika"},
+    ],
+        messageBody: "asd"
+}
+
+export function dialogsReducer(state: MessagesPage = initialState, action: Actions): MessagesPage {
     switch (action.type) {
         case  "SEND-MESSAGE":
             const newMessage = {
                 id: String(new Date().getMilliseconds()),
                 msgText: state.messageBody
             }
-            state.messages.push(newMessage)
-            state.messageBody = ""
-            return state
+            return {...state, messages: [ ...state.messages, newMessage], messageBody: ""}
         case "UPDATE-MESSAGE-BODY":
             state.messageBody = action.payload.messageText
-            return state
+            return {...state, messageBody: state.messageBody}
         default:
             return state
     }

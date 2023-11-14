@@ -1,6 +1,25 @@
-import {Actions, ProfilePage} from "./state";
+import {Actions} from "./store";
 
-export function postsReducer(state: ProfilePage, action: Actions) {
+export type Posts = {
+    id: string
+    postText: string
+    likeCount: number
+}
+
+export type ProfilePage = {
+    posts: Posts[],
+    textAreaValue: string
+}
+
+const initialState: ProfilePage = {
+        posts: [
+            {id: "1", postText: "Hello INCUBATOR", likeCount: 12},
+            {id: "2", postText: "Hello World", likeCount: 12},
+        ],
+        textAreaValue: "alex"
+    }
+
+export function postsReducer(state: ProfilePage = initialState, action: Actions): ProfilePage {
     switch (action.type) {
         case "ADD-POST":
             const newPost = {
@@ -8,12 +27,11 @@ export function postsReducer(state: ProfilePage, action: Actions) {
                 postText: state.textAreaValue,
                 likeCount: 0
             }
-            state.posts.push(newPost)
-            state.textAreaValue = ""
-        return state
+
+        return {...state, posts: [newPost, ...state.posts], textAreaValue: ""}
         case "UPDATE-TEXT":
-            state.textAreaValue = action.payload.postText
-        return state
+
+        return {...state, textAreaValue: action.payload.postText}
         default:
             return state
     }
@@ -29,6 +47,7 @@ export function addPost() {
 }
 
 export function updatePostBody(postText: string) {
+
     return {
         type: "UPDATE-TEXT",
         payload: {

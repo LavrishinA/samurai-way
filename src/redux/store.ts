@@ -1,32 +1,32 @@
 import {dialogsReducer, sendMessage, updateMessageBody} from "./dialogs-reducer";
 import {AddPost, AddText, postsReducer} from "./posts-reducer";
 
-export type Companions = {
+ type Companions = {
     id: string
     name: string
 }
 
-export type Posts = {
+ type Posts = {
     id: string
     postText: string
     likeCount: number
 }
 
-export type Messages = {
+ type Messages = {
     id: string
     msgText: string
 }
 
-export type ProfilePage = {
+type ProfilePage = {
     posts: Posts[],
     textAreaValue: string
 }
-export type MessagesPage = {
+ type MessagesPage = {
     messages: Messages[]
     companions: Companions[]
     messageBody: string
 }
-export type State = {
+ type Store = {
     profilePage: ProfilePage
     messagesPage: MessagesPage
 }
@@ -37,17 +37,17 @@ export type State = {
 export type Actions = AddPost | AddText | sendMessage | updateMessageBody;
 
 type StoreType = {
-    _state: State,
-    _callSubscriber: (state: State) => void
+    _state: Store,
+    _callSubscriber: (state: Store) => void
     addPost: () => void
     updateTextAreaValue: (postText: string) => void
-    subscriber: (callback: (state: State) => void) => void
-    getState: () => State
+    subscribe: (callback: (state: Store) => void) => void
+    getState: () => Store
     dispatch: (action: Actions) => void
 }
 
 export const store: StoreType = {
-    _state: <State>{
+    _state: <Store>{
         profilePage: {
             posts: [
                 {id: "1", postText: "Hello INCUBATOR", likeCount: 12},
@@ -74,14 +74,14 @@ export const store: StoreType = {
         },
     },
     _callSubscriber() {
-        console.log("State updated")
+        console.log("Store updated")
     },
     getState() {
 
         return this._state
     },
-    subscriber(callback) {
-        this._callSubscriber = callback
+    subscribe(observer) {
+        this._callSubscriber = observer
         console.log("Fire")
     },
     addPost() {

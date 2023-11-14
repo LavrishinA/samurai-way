@@ -1,19 +1,18 @@
 import './index.css';
-import {State, store} from "./redux/state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
+import {store} from "./redux/redux-store";
+import {Provider} from "react-redux";
 
 
-export function renderEntireTree(state: State) {
-    ReactDOM.render(
-        <BrowserRouter>
-            <App data={store.getState()} dispatch={store.dispatch.bind(store)}/>
-        </BrowserRouter>,
-        document.getElementById('root')
-    );
-}
+ReactDOM.render(
+    <BrowserRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </BrowserRouter>,
+    document.getElementById('root')
+)
 
-renderEntireTree(store.getState())
-store.subscriber(renderEntireTree)

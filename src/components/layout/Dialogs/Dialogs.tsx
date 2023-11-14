@@ -2,31 +2,21 @@ import React, {ChangeEvent} from "react";
 import {Companion} from "./Companion/Companion";
 import {Message} from "./Message/Message";
 import styles from "./Dialogs.module.css"
-import {Actions, Companions, Messages} from "../../../redux/state";
-import {sendMessage, updateMessageBody} from "../../../redux/dialogs-reducer";
-
-type DialogsState = {
-    dialogsState: {
-        companions: Companions[]
-        messages: Messages[]
-        messageBody: string
-    }
-    dispatch: (action: Actions) => void
-}
+import {Dialog} from "./DialogsContainer";
 
 
-export const Dialogs = ({dialogsState, dispatch}: DialogsState) => {
-
+export const Dialogs = ({messagesPage, onUpdateText, onAddMessage}: Dialog) => {
+    const {companions, messages, messageBody} = messagesPage
     const textAreaValueHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
-        dispatch(updateMessageBody(text))
+        onUpdateText(text)
     }
 
     const sendMessageValueHandler = () => {
-        dispatch(sendMessage())
+        onAddMessage()
     }
-    const companionElements = dialogsState.companions.map(c => <Companion name={c.name} id={c.id}/>)
-    const companionMessages = dialogsState.messages.map(ms => <Message msgText={ms.msgText}/>)
+    const companionElements = companions.map(c => <Companion key={c.id} name={c.name} id={c.id}/>)
+    const companionMessages = messages.map(ms => <Message key={ms.id} msgText={ms.msgText}/>)
 
     return (
         <section className={styles.dialogs}>
@@ -36,7 +26,7 @@ export const Dialogs = ({dialogsState, dispatch}: DialogsState) => {
             <section className={styles.messages}>
                 {companionMessages}
                 <div>
-                    <textarea value={dialogsState.messageBody} onChange={textAreaValueHandler} ></textarea>
+                    <textarea value={messageBody} onChange={textAreaValueHandler}></textarea>
                     <button onClick={sendMessageValueHandler}>Send message</button>
                 </div>
             </section>
